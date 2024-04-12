@@ -83,6 +83,7 @@
 		padding: 1rem;
 		font-size: var(--sml);
 		width: 100%;
+		outline: none;
 	}
 
 	.warning {

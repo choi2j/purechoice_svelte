@@ -59,6 +59,10 @@ nav img {
 
 .main {
     padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    height: 100%;
 }
 
 .search-input-container {
@@ -72,6 +76,28 @@ nav img {
     width: 100%;
     background-color: var(--gray200);
     border-radius: 10px;
-    padding: 0.2rem;
+    padding: 0.5rem;
     display: flex;
+    gap: 0.2rem;
+}
+
+.search-input {
+    width: 100%;
+    display: flex;
+    background: none;
+    background-color: none;
+    border: none;
+    padding: 0.2rem;
+    outline: none;
+    color: var(--gray50);
+}
+
+.search-input-form button {
+    background-color: none;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray50);
 }
