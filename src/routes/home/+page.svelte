@@ -27,7 +27,7 @@
 	</nav>
 	<div class="main">
 		<div class="search-input-container">
-			<form action="/home/search" method="POST" class="search-input-form">
+			<form action="/home/search" method="GET" class="search-input-form">
 				<input type="text" name="search" id="search" class="search-input" placeholder="search" bind:value={query} />
 				<button type="submit">
 					<img src={si} alt="search" />
