@@ -2,6 +2,7 @@
 	import '$lib/style/style.css';
 	import lg from '$lib/assets/logo.svg';
 	import yc from '$lib/assets/yellowcheck.svg';
+	import { supabase } from '$lib/supabaseClient';
 
 	let idVal = '';
 	let passVal = '';
@@ -15,9 +16,17 @@
 		console.log(idVal, passVal);
 	}
 
+	async function reg() {
+		const { error } = await supabase
+			.from('allergyList')
+			.insert({name: idVal, password: passVal})
+	}
+
 	function check() {
-		if(idVal && passVal)
+		if(idVal && passVal) {
 			finish = 1;
+			reg();
+		}
 		else(idVal && passVal) 
 			return null;
 	}

@@ -13,6 +13,9 @@
 		{ text: '꽃가루 알레르기, 음식도 조심하세요!' },
 		{ text: '제품에 사진이 있으면 진짜, 그림이면 향만 첨가!?!' },
 	];
+	let query = '';
+
+	
 </script>
 
 <div class="container">
@@ -24,8 +27,8 @@
 	</nav>
 	<div class="main">
 		<div class="search-input-container">
-			<form action="" method="GET" class="search-input-form">
-				<input type="text" name="search" id="search" class="search-input" placeholder="search" />
+			<form action="/home/search" method="POST" class="search-input-form">
+				<input type="text" name="search" id="search" class="search-input" placeholder="search" bind:value={query} />
 				<button type="submit">
 					<img src={si} alt="search" />
 				</button>
