@@ -7,12 +7,17 @@
 	import sb from '$lib/assets/samplebg.png';
 	import li from '$lib/assets/likeicon.svg';
 
+	import flower from '$lib/assets/flower.jpg';
+	import chips from '$lib/assets/chips.jpg';
+	import phone from '$lib/assets/phone.jpg';
+	import book from '$lib/assets/book.jpg';
+
 	let recent = [{ i: 1 }, { i: 1 }, { i: 1 }, { i: 1 }, { i: 1 }, { i: 1 }];
 	let today = [
-		{ text: '꽃가루 알레르기, 음식도 조심하세요!' },
-		{ text: '제품에 사진이 있으면 진짜, 그림이면 향만 첨가!?!' },
-		{ text: '꽃가루 알레르기, 음식도 조심하세요!' },
-		{ text: '제품에 사진이 있으면 진짜, 그림이면 향만 첨가!?!' }
+		{ text: '꽃가루 알레르기, 음식도 조심하세요!', img: flower },
+		{ text: '제품에 사진이 있으면 진짜, 그림이면 향만 첨가!?!', img: chips },
+		{ text: '오늘의 정보!! 신기하다 신기해', img: phone },
+		{ text: '이렇게 유용한 정보를 알수있다니!!!', img: book }
 	];
 	let query = '';
 </script>
@@ -59,14 +64,11 @@
 				<a href="/home/today" class="more">더보기 &gt;</a>
 			</div>
 			<div class="list">
-				{#each today as { text }, i}
-					<a class="item" href="/home/today/post">
-						<img src={sb} alt="sample" />
+				{#each today as { text, img }, i}
+					<a class="item" href="/home/today/post{i+1}">
+						<img src={img} alt="sample" class="sample"/>
 						<div class="desc">
 							<p>{text}</p>
-							<button>
-								<img src={li} alt="like" />
-							</button>
 						</div>
 					</a>
 				{/each}
@@ -139,18 +141,23 @@
 		height: 100%;
 		background-color: var(--gray242);
 		border-radius: 10px;
-		padding: 0.5rem;
+		padding: 1rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
 	}
 
-	.today-info .list .item img {
-		height: 80%;
+	.today-info .list .item .sample {
+		height: 10rem;
+		width: 10rem;
+		object-fit: cover;
+		border-radius: 10px;
 	}
 
 	.today-info .list .item .desc {
 		display: flex;
 		flex-direction: row;
 		width: 100%;
-		padding: 0.5rem;
 	}
 
 	.desc p {

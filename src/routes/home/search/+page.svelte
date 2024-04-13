@@ -45,9 +45,6 @@
 		<a href="/home">
 			<img src={rt} alt="return" />
 		</a>
-		<button>
-			<img src={shi} alt="share" />
-		</button>
 	</nav>
 	<div class="main">
 		<div class="search-input-container">
