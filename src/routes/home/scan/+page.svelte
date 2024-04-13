@@ -1,4 +1,6 @@
 <script>
+    import '$lib/style/style.css';
+
 	import { Html5Qrcode } from 'html5-qrcode';
 	import { onMount } from 'svelte';
 

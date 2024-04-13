@@ -29,6 +29,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@supabase/supabase-js": "^2.42.3"
+		"@supabase/supabase-js": "^2.42.3",
+		"query-string": "^9.0.0"
 	}
 }
