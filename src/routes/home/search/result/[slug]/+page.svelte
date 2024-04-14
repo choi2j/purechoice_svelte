@@ -36,6 +36,10 @@
 			list = res;
 			item = list[0].item;
 			console.log(item);
+			let rawmtrl = item.rawmtrl.split(',');
+			let nutrient = item.nutrient.split(',');
+			console.log(rawmtrl);
+			console.log(nutrient);
 		});
 	});
 </script>

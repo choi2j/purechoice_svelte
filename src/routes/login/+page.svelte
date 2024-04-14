@@ -22,8 +22,28 @@
 			.insert({name: idVal, password: passVal})
 	}
 
-	function check() {
+	async function already() {
+		const { data, error } = await supabase
+			.from('allergyList')
+			// @ts-ignore
+			.select()
+			.eq('name', idVal);
+			console.log(data);
+		return data;
+	}
+
+	async function check() {
 		if(idVal && passVal) {
+			let asdf = await already();
+			console.log(Boolean(asdf));
+			if (asdf.length != 0) {
+				console.log(asdf);
+				if (asdf[0].password != passVal) {return null;}
+				else if (asdf[0].password == passVal) {
+					finish = 1;
+					return;
+				}
+			}
 			finish = 1;
 			reg();
 		}
