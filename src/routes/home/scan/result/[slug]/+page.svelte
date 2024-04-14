@@ -5,6 +5,8 @@
 
 	import rt from '$lib/assets/return.svg';
 	import shi from '$lib/assets/share_icon.svg';
+	import { myStore } from '$lib/store';
+	import { supabase } from '$lib/supabaseClient';
 
 	let barcode = $page.params.slug;
 
@@ -70,7 +72,24 @@
 					console.log(item);
 				});
 			});
+
+		/**
+		 * @type {string}
+		 */
+		let nickname;
+		myStore.subscribe(value => {
+			console.log([value.nickname, '1'])
+			nickname = value.nickname;
+		})
+		async function record() {
+			console.log(nickname);
+			const { error } = await supabase.from('searchList').insert({userName: nickname, goodsID: barcode});
+			if (error) console.log(error);
+		}
+		record();
 	});
+
+	
 
 	// 예시 데이터 8801111904704 : 마이쮸 딸기맛
 </script>

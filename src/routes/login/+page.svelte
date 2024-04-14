@@ -3,6 +3,7 @@
 	import lg from '$lib/assets/logo.svg';
 	import yc from '$lib/assets/yellowcheck.svg';
 	import { supabase } from '$lib/supabaseClient';
+	import { myStore } from '$lib/store';
 
 	let idVal = '';
 	let passVal = '';
@@ -36,14 +37,19 @@
 		if(idVal && passVal) {
 			let asdf = await already();
 			console.log(Boolean(asdf));
+			// @ts-ignore
 			if (asdf.length != 0) {
 				console.log(asdf);
+				// @ts-ignore
 				if (asdf[0].password != passVal) {return null;}
+				// @ts-ignore
 				else if (asdf[0].password == passVal) {
+					myStore.set({nickname: idVal});
 					finish = 1;
 					return;
 				}
 			}
+			myStore.set({nickname: idVal});
 			finish = 1;
 			reg();
 		}

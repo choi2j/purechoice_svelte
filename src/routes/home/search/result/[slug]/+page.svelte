@@ -5,8 +5,24 @@
 
 	import rt from '$lib/assets/return.svg';
 	import shi from '$lib/assets/share_icon.svg';
+	import { myStore } from '$lib/store';
+	import { supabase } from '$lib/supabaseClient';
 
 	let prdlstReportNo = $page.params.slug;
+	/**
+	 * @type {string}
+	 */
+	let nickname;
+	myStore.subscribe(value => {
+		console.log([value.nickname, '1'])
+		nickname = value.nickname;
+	})
+	async function record() {
+		console.log(nickname);
+		const { error } = await supabase.from('searchList').insert({userName: nickname, goodsID: prdlstReportNo});
+		if (error) console.log(error);
+	}
+	record();
 
 	/**
 	 * @type {any}
