@@ -1,4 +1,5 @@
 <script>
+
     import '$lib/style/style.css';
 	import lg from '$lib/assets/logo.svg';
 	import ui from '$lib/assets/userimg.svg';
@@ -11,8 +12,42 @@
 	import chips from '$lib/assets/chips.jpg';
 	import phone from '$lib/assets/phone.jpg';
 	import book from '$lib/assets/book.jpg';
+	import { supabase } from '$lib/supabaseClient';
+	import { myStore } from '$lib/store';
 
-	let recent = [{ i: 1 }, { i: 1 }, { i: 1 }, { i: 1 }, { i: 1 }, { i: 1 }];
+	/**
+	 * @type {string}
+	 */
+	let nickname;
+	myStore.subscribe(value => {
+		console.log([value.nickname, '1'])
+		nickname = value.nickname;
+	})
+	async function getRecent() {
+		// @ts-ignore
+		let { error } = await supabase.from('searchList').select().eq('userName', nickname).order('id', {ascending:false}).limit(10)
+		.then(async (res) => {
+			// @ts-ignore
+			recent = res.data;
+			console.log(recent);
+			for (let i = 0; i < recent.length; i++) {
+				let result;
+				await fetch(
+					`https://apis.data.go.kr/B553748/CertImgListServiceV3/getCertImgListServiceV3?serviceKey=I6j8ftZVndEWKbhSsmcwF%2FEBEDj0WJVOA7EBUtK46S8ro4LjwzywS326Q2PqYYasxppLCtv5XBHLm08TRnCpPw%3D%3D&prdlstReportNo=${recent[i].goodsID}&returnType=json&pageNo=1&numOfRows=10`
+				)
+				.then((res) => res.json())
+				.then((res) => {
+					result = res.body.items
+					console.log(result);
+					if (result[0] !== undefined) recent[i].imageURL = result[0].item.imgurl1;
+				});
+			}
+		});
+	}
+
+	getRecent()
+
+	let recent = [{id: 0, userName: "0", goodsID: 0, imageURL: 'null'}];
 	let today = [
 		{ text: '꽃가루 알레르기, 음식도 조심하세요!', img: flower },
 		{ text: '제품에 사진이 있으면 진짜, 그림이면 향만 첨가!?!', img: chips },
@@ -51,9 +86,9 @@
 				<a href="/home/search/recent" class="more">더보기 &gt;</a>
 			</div>
 			<div class="list">
-				{#each recent as i}
-					<a class="item" href="/home/search/result">
-						<img src={sp} alt="sample" />
+				{#each recent as {goodsID, imageURL}, i}
+					<a class="item" href="/home/search/result/{goodsID}">
+						<img src={imageURL} alt="sample" />
 					</a>
 				{/each}
 			</div>
