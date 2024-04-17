@@ -232,4 +232,11 @@
 	.scan {
 		margin-top: auto;
 	}
+
+	.goodsImage {
+		height: 5rem;
+		width: 5rem;
+		object-fit: cover;
+		border-radius: 10px;
+	}
 </style>
