@@ -13,13 +13,15 @@
 	 * @type {string}
 	 */
 	let nickname;
-	myStore.subscribe(value => {
-		console.log([value.nickname, '1'])
+	myStore.subscribe((value) => {
+		console.log([value.nickname, '1']);
 		nickname = value.nickname;
-	})
+	});
 	async function record() {
 		console.log(nickname);
-		const { error } = await supabase.from('searchList').insert({userName: nickname, goodsID: prdlstReportNo});
+		const { error } = await supabase
+			.from('searchList')
+			.insert({ userName: nickname, goodsID: prdlstReportNo });
 		if (error) console.log(error);
 	}
 	record();
@@ -33,6 +35,23 @@
 	 * @type {any}
 	 */
 	let item = {};
+	/**
+	 * @type {any}
+	 */
+	let rawmtrl = [];
+	/**
+	 * @type {any}
+	 */
+	let nutrient = [];
+	/**
+	 * @type {any}
+	 */
+	let allergy = [];
+
+	/**
+	 * @type {any}
+	 */
+	let userAllergy = [];
 
 	onMount(() => {
 		/**
@@ -52,12 +71,13 @@
 			list = res;
 			item = list[0].item;
 			console.log(item);
-			let rawmtrl = item.rawmtrl.split(',');
-			let nutrient = item.nutrient.split(',');
-			console.log(rawmtrl);
-			console.log(nutrient);
+			rawmtrl = item.rawmtrl.split(',');
+			nutrient = item.nutrient.split(' ');
+			allergy = item.allergy.split(' ');
+			console.log('raw', rawmtrl);
+			console.log('nutr', nutrient);
+			console.log('alle', allergy);
 		});
-		
 	});
 </script>
 
@@ -79,11 +99,27 @@
 		<p class="prdNm">{item.prdlstNm}</p>
 		<div class="list">
 			<p class="title">원재료명</p>
-			<div class="rawmtrl content">{item.rawmtrl}</div>
+			<div class="rawmtrl content">
+				{#each rawmtrl as rawmtrl}
+					<p>{rawmtrl},</p>
+				{/each}
+			</div>
+		</div>
+		<div class="list">
+			<p class="title">알레르기</p>
+			<div class="allergy content">
+				{#each allergy as allergy}
+					<p>{allergy}</p>
+				{/each}
+			</div>
 		</div>
 		<div class="list">
 			<p class="title">영양성분</p>
-			<div class="nutrient content">{item.nutrient}</div>
+			<div class="nutrient content">
+				{#each nutrient as nutrient}
+					<p>{nutrient}</p>
+				{/each}
+			</div>
 		</div>
 	</div>
 </div>
@@ -143,6 +179,15 @@
 		font-size: var(--sml);
 		font-weight: var(--regu);
 		word-break: keep-all;
-        letter-spacing: 0.05rem;
+		letter-spacing: 0.05rem;
+	}
+
+	.nutrient {
+		margin-bottom: 3rem;
+	}
+
+	.content p {
+		width: fit-content;
+		display: inline;
 	}
 </style>
