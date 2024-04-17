@@ -31,6 +31,16 @@
 	let prodlist = [];
 
 	onMount(() => {
+
+		/**
+		 * @type {string}
+		 */
+		let nickname;
+		myStore.subscribe(value => {
+			console.log([value.nickname, '1'])
+			nickname = value.nickname;
+		})
+
 		console.log(barcode);
 		/**
 		 * @param {any} input
@@ -63,6 +73,14 @@
 				console.log(prodlist[0], 1);
 				prod = prodlist[0].PRDLST_REPORT_NO;
 				console.log(prod);
+				if (prodlist !== undefined) {
+					async function record() {
+						console.log(nickname);
+						const { error } = await supabase.from('searchList').insert({userName: nickname, goodsID: prod});
+						if (error) console.log(error);
+					}
+					record();
+				}
 			})
 			.then((res) => {
 				getResult(prod).then((res2) => {
@@ -73,20 +91,8 @@
 				});
 			});
 
-		/**
-		 * @type {string}
-		 */
-		let nickname;
-		myStore.subscribe(value => {
-			console.log([value.nickname, '1'])
-			nickname = value.nickname;
-		})
-		async function record() {
-			console.log(nickname);
-			const { error } = await supabase.from('searchList').insert({userName: nickname, goodsID: barcode});
-			if (error) console.log(error);
-		}
-		record();
+		
+		
 	});
 
 	
