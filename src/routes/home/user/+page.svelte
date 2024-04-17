@@ -1,3 +1,7 @@
+<head>
+	<title>유저 정보</title>
+</head>
+
 <script>
 	import { myStore } from '$lib/store';
 	import rt from '$lib/assets/return.svg';
@@ -23,7 +27,7 @@
         <img src={userimg} alt="user">
     </div>
     <div class="goallergy-con">
-        <a class="goallergy" href="/home/user/allergy">알레르기 정보 수정</a>
+        <a class="goallergy" href="/home/user/info">알레르기 정보 수정</a>
     </div>
 </div>
 

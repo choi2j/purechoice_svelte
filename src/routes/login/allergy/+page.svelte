@@ -1,6 +1,7 @@
 <script>
 	import '$lib/style/style.css';
 	import logo from '$lib/assets/logo.svg';
+	
 </script>
 
 <div class="container">
@@ -18,6 +19,7 @@
 		gap: 3rem;
 		text-align: center;
 	}
+	
 	img {
 		height: 3rem;
 		margin-bottom: 1rem;

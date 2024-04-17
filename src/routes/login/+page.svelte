@@ -1,3 +1,7 @@
+<head>
+	<title>로그인</title>
+</head>
+
 <script>
 	import '$lib/style/style.css';
 	import lg from '$lib/assets/logo.svg';

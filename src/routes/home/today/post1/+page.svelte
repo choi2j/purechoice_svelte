@@ -3,6 +3,7 @@
 	import flower from '$lib/assets/flower.jpg';
 	import rt from '$lib/assets/return.svg';
 	import shi from '$lib/assets/share_icon.svg';
+	import li from '$lib/assets/likeicon.png';
 	import share from '$lib/assets/export.png';
 
 	let data = {
@@ -31,6 +32,9 @@
 	<div class="main">
 		<img src={flower} alt="" />
 		<p class="title">{data.title}</p>
+		<button>
+			<img src="" alt="">
+		</button>
 		<p class="content">{data.value}</p>
 	</div>
 </div>

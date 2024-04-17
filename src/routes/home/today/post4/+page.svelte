@@ -4,6 +4,7 @@
 	import rt from '$lib/assets/return.svg';
 	import shi from '$lib/assets/share_icon.svg';
 	import share from '$lib/assets/export.png';
+	import li from '$lib/assets/likeicon2.png';
 
 	let data = {
 		title: '이렇게 유용한 정보를 알수있다니!!!',
@@ -29,7 +30,12 @@
 	</nav>
 	<div class="main">
 		<img src={book} alt="" />
-		<p class="title">{data.title}</p>
+		<div class="main-title">
+			<p class="title">{data.title}</p>
+			<button>
+				<img src={li} alt="">
+			</button>
+		</div>
 		<p class="content">{data.value}</p>
 	</div>
 </div>
@@ -89,5 +95,22 @@
 		font-weight: var(--regu);
 		word-break: keep-all;
 		line-height: 150%;
+	}
+
+	.main button {
+		background: none;
+		border: none;
+		height: 2rem;
+	}
+
+	.main button img {
+		height: 2rem;
+	}
+
+	.main-title {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
 	}
 </style>
