@@ -204,12 +204,6 @@
 		width: fit-content;
 	}
 
-	.desc button {
-		border: none;
-		background: none;
-		background-color: none;
-	}
-
 	.header {
 		display: flex;
 		flex-direction: row;
