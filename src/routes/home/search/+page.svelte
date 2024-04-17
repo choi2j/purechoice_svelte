@@ -90,12 +90,6 @@
 		height: 1rem;
 	}
 
-	nav button {
-		background: none;
-		background-color: none;
-		border: none;
-	}
-
 	nav button img {
 		height: 1.3rem;
 	}

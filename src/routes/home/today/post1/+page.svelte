@@ -70,7 +70,7 @@
 	.main {
 		display: flex;
 		flex-direction: column;
-		gap: 1rem;
+		gap: 2rem;
 		color: var(--white);
 	}
 
@@ -87,7 +87,7 @@
 	}
 
 	.main .content {
-		font-size: var(--sml);
+		font-size: var(--xsml);
 		font-weight: var(--regu);
 		word-break: keep-all;
 		line-height: 150%;
