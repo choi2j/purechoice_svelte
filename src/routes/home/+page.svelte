@@ -86,12 +86,15 @@
 				<a href="/home/search/recent" class="more">더보기 &gt;</a>
 			</div>
 			<div class="list">
+				{#if recent}
 				{#each recent as {goodsID, imageURL}, i}
 					<a class="item" href="/home/search/result/{goodsID}">
 						<img src={imageURL} alt="sample" class="goodsImage" />
 						<!-- 얘 크기랑 모양 조정좀 -->
 					</a>
 				{/each}
+				{/if}
+				
 			</div>
 		</div>
 		<div class="today-info">
