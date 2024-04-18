@@ -13,13 +13,15 @@
 	 * @type {string}
 	 */
 	let nickname;
-	myStore.subscribe(value => {
-		console.log([value.nickname, '1'])
+	myStore.subscribe((value) => {
+		console.log([value.nickname, '1']);
 		nickname = value.nickname;
-	})
+	});
 	async function record() {
 		console.log(nickname);
-		const { error } = await supabase.from('searchList').insert({userName: nickname, goodsID: prdlstReportNo});
+		const { error } = await supabase
+			.from('searchList')
+			.insert({ userName: nickname, goodsID: prdlstReportNo });
 		if (error) console.log(error);
 	}
 	record();
@@ -33,6 +35,31 @@
 	 * @type {any}
 	 */
 	let item = {};
+	/**
+	 * @type {any}
+	 */
+	let rawmtrl = [];
+	/**
+	 * @type {any}
+	 */
+	$: rawmtrlOb = [];
+	/**
+	 * @type {any}
+	 */
+	let nutrient = [];
+	/**
+	 * @type {any}
+	 */
+	let allergy = [];
+	/**
+	 * @type {any}
+	 */
+	$: allergyOb = [];
+
+	/**
+	 * @type {any}
+	 */
+	let userAllergy = [];
 
 	onMount(() => {
 		/**
@@ -52,12 +79,61 @@
 			list = res;
 			item = list[0].item;
 			console.log(item);
-			let rawmtrl = item.rawmtrl.split(',');
-			let nutrient = item.nutrient.split(',');
-			console.log(rawmtrl);
-			console.log(nutrient);
+			rawmtrl = item.rawmtrl.split(',');
+			nutrient = item.nutrient.split(',');
+			allergy = item.allergy.split(',');
+			console.log('raw', rawmtrl);
+			console.log('nutr', nutrient);
+			console.log('alle', allergy);
+
+			let yes = 0;
+
+			for (let i = 0; i < rawmtrl.length; i++) {
+				yes = 0;
+				for (let j = 0; j < userAllergy.length; j++) {
+					if (rawmtrl[i].includes(userAllergy[j])) {
+						rawmtrlOb.push({
+							text: rawmtrl[i],
+							color: 'yellow'
+						});
+						yes = 1;
+						break;
+					}
+				}
+				if (yes) {
+					continue;
+				} else {
+					rawmtrlOb.push({
+						text: rawmtrl[i],
+						color: 'white'
+					});
+				}
+			}
+			rawmtrlOb = rawmtrlOb;
+
+			for (let i = 0; i < allergy.length; i++) {
+				yes = 0;
+				for (let j = 0; j < userAllergy.length; j++) {
+					if (allergy[i].includes(userAllergy[j])) {
+						allergyOb.push({
+							text: allergy[i],
+							color: 'yellow'
+						});
+						yes = 1;
+						break;
+					}
+				}
+				if (yes) {
+					continue;
+				} else {
+					allergyOb.push({
+						text: allergy[i],
+						color: 'white'
+					});
+				}
+			}
+			allergyOb = allergyOb;
 		});
-		
 	});
 </script>
 
@@ -79,11 +155,50 @@
 		<p class="prdNm">{item.prdlstNm}</p>
 		<div class="list">
 			<p class="title">원재료명</p>
-			<div class="rawmtrl content">{item.rawmtrl}</div>
+			<div class="rawmtrl content">
+				{#each rawmtrlOb as item, i}
+					{#if item.color == 'yellow'}
+						<p class="backY">{item.text}</p>
+					{:else}
+						<p>{item.text}</p>
+					{/if}
+					{#if i == rawmtrlOb.length - 1}
+						&nbsp;
+					{:else}
+						&#44;&nbsp;
+					{/if}
+				{/each}
+			</div>
+		</div>
+		<div class="list">
+			<p class="title">알레르기</p>
+			<div class="allergy content">
+				{#each allergyOb as item, i}
+					{#if item.color == 'yellow'}
+						<p class="backY">{item.text}</p>
+					{:else}
+						<p>{item.text}</p>
+					{/if}
+					{#if i == allergyOb.length - 1}
+						&nbsp;
+					{:else}
+						&#44;&nbsp;
+					{/if}
+				{/each}
+			</div>
 		</div>
 		<div class="list">
 			<p class="title">영양성분</p>
-			<div class="nutrient content">{item.nutrient}</div>
+			<div class="nutrient content">
+				{#each nutrient as item, i}
+					<p>{item}</p>
+					{#if i == nutrient.length - 1}
+						&nbsp;
+					{:else}
+						&#44;&nbsp;
+					{/if}
+				{/each}
+			</div>
 		</div>
 	</div>
 </div>
@@ -143,6 +258,23 @@
 		font-size: var(--sml);
 		font-weight: var(--regu);
 		word-break: keep-all;
-        letter-spacing: 0.05rem;
+		letter-spacing: 0.05rem;
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	.nutrient {
+		margin-bottom: 3rem;
+	}
+
+	.content p {
+		width: fit-content;
+		display: inline;
+	}
+
+	.backY {
+		background-color: var(--yellow);
+		font-weight: var(--semi);
+		color: var(--black);
 	}
 </style>

@@ -3,6 +3,7 @@
 	import chips from '$lib/assets/chips.jpg';
 	import rt from '$lib/assets/return.svg';
 	import shi from '$lib/assets/share_icon.svg';
+	import li from '$lib/assets/likeicon.png';
 	import share from '$lib/assets/export.png';
 
 	let data = {

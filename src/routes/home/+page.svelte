@@ -6,7 +6,7 @@
 	import si from '$lib/assets/search_icon.svg';
 	import sp from '$lib/assets/sample.png';
 	import sb from '$lib/assets/samplebg.png';
-	import li from '$lib/assets/likeicon.svg';
+	import li from '$lib/assets/likeicon.png';
 
 	import flower from '$lib/assets/flower.jpg';
 	import chips from '$lib/assets/chips.jpg';
@@ -108,6 +108,9 @@
 						<img src={img} alt="sample" class="sample"/>
 						<div class="desc">
 							<p>{text}</p>
+							<button>
+								<img src={li} alt="" />
+							</button>
 						</div>
 					</a>
 				{/each}
@@ -235,5 +238,14 @@
 		width: 5rem;
 		object-fit: cover;
 		border-radius: 10px;
+	}
+
+	.desc button {
+		background: none;
+		border: none;
+	}
+
+	.desc button img {
+		height: 1rem;
 	}
 </style>

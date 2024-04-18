@@ -30,16 +30,33 @@
 	 */
 	let prodlist = [];
 
-	onMount(() => {
+	/**
+	 * @type {any}
+	 */
+	let rawmtrl = [];
+	/**
+	 * @type {any}
+	 */
+	let nutrient = [];
+	/**
+	 * @type {any}
+	 */
+	let allergy = [];
 
+	/**
+	 * @type {any}
+	 */
+	let userAllergy = [];
+
+	onMount(() => {
 		/**
 		 * @type {string}
 		 */
 		let nickname;
-		myStore.subscribe(value => {
-			console.log([value.nickname, '1'])
+		myStore.subscribe((value) => {
+			console.log([value.nickname, '1']);
 			nickname = value.nickname;
-		})
+		});
 
 		console.log(barcode);
 		/**
@@ -76,7 +93,9 @@
 				if (prodlist !== undefined) {
 					async function record() {
 						console.log(nickname);
-						const { error } = await supabase.from('searchList').insert({userName: nickname, goodsID: prod});
+						const { error } = await supabase
+							.from('searchList')
+							.insert({ userName: nickname, goodsID: prod });
 						if (error) console.log(error);
 					}
 					record();
@@ -88,14 +107,15 @@
 					list = res2;
 					item = list[0].item;
 					console.log(item);
+					rawmtrl = item.rawmtrl.split(' ');
+					nutrient = item.nutrient.split(' ');
+					allergy = item.allergy.split(' ');
+					console.log('raw', rawmtrl);
+					console.log('nutr', nutrient);
+					console.log('alle', allergy);
 				});
 			});
-
-		
-		
 	});
-
-	
 
 	// 예시 데이터 8801111904704 : 마이쮸 딸기맛
 </script>
@@ -118,11 +138,27 @@
 		<p class="prdNm">{item.prdlstNm}</p>
 		<div class="list">
 			<p class="title">원재료명</p>
-			<div class="rawmtrl content">{item.rawmtrl}</div>
+			<div class="rawmtrl content">
+				{#each rawmtrl as rawmtrl}
+					<p>{rawmtrl},</p>
+				{/each}
+			</div>
+		</div>
+		<div class="list">
+			<p class="title">알레르기</p>
+			<div class="allergy content">
+				{#each allergy as allergy}
+					<p>{allergy}</p>
+				{/each}
+			</div>
 		</div>
 		<div class="list">
 			<p class="title">영양성분</p>
-			<div class="nutrient content">{item.nutrient}</div>
+			<div class="nutrient content">
+				{#each nutrient as nutrient}
+					<p>{nutrient}</p>
+				{/each}
+			</div>
 		</div>
 	</div>
 </div>
@@ -185,4 +221,12 @@
 		letter-spacing: 0.05rem;
 	}
 
+	.nutrient {
+		margin-bottom: 3rem;
+	}
+
+	.content p {
+		width: fit-content;
+		display: inline;
+	}
 </style>

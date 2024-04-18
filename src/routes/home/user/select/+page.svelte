@@ -2,7 +2,6 @@
 	import '$lib/style/style.css';
 	import si from '$lib/assets/search_icon.svg';
 	import rt from '$lib/assets/return.svg';
-	import yc from '$lib/assets/yellowcheck.svg';
 
 	import egg from '$lib/assets/allergy/1.png';
 	import milk from '$lib/assets/allergy/2.png';
@@ -146,67 +145,57 @@
 		allergyList = Array.from(allergy);
 		console.log(allergyList);
 	}
-
-	let finish = 0;
 </script>
 
+<head>
+	<title>알레르기 정보</title>
+</head>
+
 <div class="container">
-	{#if finish == 0}
-		<nav>
-			<a href="/home">
-				<img src={rt} alt="return" />
-			</a>
-		</nav>
-		<div class="search-input-form">
-			<input
-				type="text"
-				name="search"
-				id="search"
-				class="search-input"
-				placeholder="search"
-				bind:value={tag}
-			/>
-			<button type="submit">
-				<img src={si} alt="search" />
-			</button>
-		</div>
-		<div class="tags">
-			{#each tagInfo as { icon, name, status }, i}
-				{#if status == 'inactive'}
-					<button
-						class="tag"
-						on:click={() => {
-							addAllergy(name, i);
-						}}
-					>
-						<img class="tag-icon" src={icon} alt="icon" />
-						<p class="tag-name">{name}</p>
-					</button>
-				{:else}
-					<button
-						class="tag active"
-						on:click={() => {
-							addAllergy(name, i);
-						}}
-					>
-						<img class="tag-icon" src={icon} alt="icon" />
-						<p class="tag-name">{name}</p>
-					</button>
-				{/if}
-			{/each}
-		</div>
-		<button
-			class="primary-button"
-			on:click={() => {
-				convert();
-				finish = 1;
-			}}>다음</button
-		>
-	{:else}
-		<img src={yc} alt="check" class="check" />
-		<p class="big">가입 성공</p>
-		<a class="primary-button" href="/home">시작하기</a>
-	{/if}
+	<nav>
+		<a href="/home">
+			<img src={rt} alt="return" />
+		</a>
+	</nav>
+	<div class="search-input-form">
+		<input
+			type="text"
+			name="search"
+			id="search"
+			class="search-input"
+			placeholder="search"
+			bind:value={tag}
+		/>
+		<button type="submit">
+			<img src={si} alt="search" />
+		</button>
+	</div>
+	<div class="tags">
+		{#each tagInfo as { icon, name, status }, i}
+			{#if status == 'inactive'}
+				<button
+					class="tag"
+					on:click={() => {
+						addAllergy(name, i);
+					}}
+				>
+					<img class="tag-icon" src={icon} alt="icon" />
+					<p class="tag-name">{name}</p>
+				</button>
+			{:else}
+				<button
+					class="tag active"
+					on:click={() => {
+						addAllergy(name, i);
+					}}
+				>
+					<img class="tag-icon" src={icon} alt="icon" />
+					<p class="tag-name">{name}</p>
+				</button>
+			{/if}
+		{/each}
+	</div>
+	<a class="primary-button" on:click={convert} href="/home">수정하기</a>
 </div>
 
 <style scoped>
@@ -239,9 +228,7 @@
 	}
 
 	.tag img {
-		width: 7rem;
 		height: 7rem;
-		object-fit: contain;
 	}
 
 	.tag p {
@@ -253,22 +240,16 @@
 		color: var(--yellow);
 	}
 
-	.check {
-		margin-top: 5rem;
-		height: 15rem;
-	}
-
-	.big {
-		font-size: var(--big);
-		font-weight: var(--semi);
-		color: var(--white);
-		text-align: center;
-	}
-
 	.primary-button {
 		position: fixed;
 		bottom: 0;
 		margin-bottom: 1.75rem;
 		width: calc(100% - 1.75rem * 2);
+	}
+	
+	.tag img {
+		width: 7rem;
+		height: 7rem;
+		object-fit: contain;
 	}
 </style>
