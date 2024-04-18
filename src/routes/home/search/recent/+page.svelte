@@ -1,6 +1,7 @@
 <script>
 	import '$lib/style/style.css';
 	import rt from '$lib/assets/return.svg';
+	import lg from '$lib/assets/logo.svg';
 
 	import { supabase } from '$lib/supabaseClient';
 	import { myStore } from '$lib/store';
@@ -41,13 +42,13 @@
 
 	getRecent();
 
-	let recent = [{ id: 0, userName: '0', goodsID: 0, imageURL: 'null' }];
+	let recent = [{ id: 0, userName: '0', goodsID: 0, imageURL: lg, canEat: true }];
 
-	let select = 0;
+	let select = true;
 
 	function changeSelection() {
-		if (select) select = 0;
-		else select = 1;
+		if (!select) select = true;
+		else select = false;
 	}
 </script>
 
@@ -60,7 +61,7 @@
 		<button></button>
 	</nav>
 	<div class="selection">
-		{#if select}
+		{#if !select}
 			<button on:click={changeSelection}>O</button>
 			<button on:click={changeSelection} class="active">X</button>
             {:else}
@@ -69,10 +70,12 @@
 		{/if}
 	</div>
 	<div class="recent">
-		{#each recent as { goodsID, imageURL }, i}
-			<a class="item" href="/home/search/result/{goodsID}">
-				<img src={imageURL} alt="sample" class="goodsImage" />
-			</a>
+		{#each recent as { goodsID, imageURL, canEat }, i}
+			{#if select == canEat}
+				<a class="item" href="/home/search/result/{goodsID}">
+					<img src={imageURL} alt="sample" class="goodsImage" />
+				</a>
+			{/if}
 		{/each}
 	</div>
 </div>

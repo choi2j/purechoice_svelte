@@ -22,6 +22,8 @@
 	import pork from '$lib/assets/allergy/17.png';
 	import beef from '$lib/assets/allergy/18.png';
 	import ahwangsan from '$lib/assets/allergy/19.png';
+	import { myStore } from '$lib/store';
+	import { supabase } from '$lib/supabaseClient';
 
 	let tag = '';
 	let tagInfo = [
@@ -141,9 +143,19 @@
 
 	//@ts-ignore
 	let allergyList;
-	function convert() {
+	/**
+	 * @type {string}
+	 */
+	let nickname;
+	myStore.subscribe(value => {
+		console.log([value.nickname, '1'])
+		nickname = value.nickname;
+	})
+	async function convert() {
 		allergyList = Array.from(allergy);
 		console.log(allergyList);
+		let altojson = {"allergys": allergyList};
+		await supabase.from('allergyList').update({ allergys: altojson}).eq('name', nickname);
 	}
 </script>
 

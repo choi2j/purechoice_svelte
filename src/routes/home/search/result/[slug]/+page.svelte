@@ -13,10 +13,12 @@
 	 * @type {string}
 	 */
 	let nickname;
+	let danger;
 	myStore.subscribe((value) => {
 		console.log([value.nickname, '1']);
 		nickname = value.nickname;
 	});
+	
 	async function record() {
 		console.log(nickname);
 		const { error } = await supabase
@@ -61,6 +63,15 @@
 	 */
 	let userAllergy = [];
 
+	async function compare() {
+		await supabase.from('allergyList').select('allergys').eq('name', nickname)
+		.then((res) => {
+			// @ts-ignore
+			userAllergy = res.data[0].allergys.allergys;
+			console.log(userAllergy);
+		});
+	}
+
 	onMount(() => {
 		/**
 		 * @param {any} input
@@ -75,6 +86,7 @@
 			// await console.log(result);
 			return result;
 		}
+		compare();
 		getResult(prdlstReportNo).then((res) => {
 			list = res;
 			item = list[0].item;
@@ -86,21 +98,20 @@
 			console.log('nutr', nutrient);
 			console.log('alle', allergy);
 
-			let yes = 0;
+			let yes = true;
 
 			for (let i = 0; i < rawmtrl.length; i++) {
-				yes = 0;
 				for (let j = 0; j < userAllergy.length; j++) {
 					if (rawmtrl[i].includes(userAllergy[j])) {
 						rawmtrlOb.push({
 							text: rawmtrl[i],
 							color: 'yellow'
 						});
-						yes = 1;
+						yes = false;
 						break;
 					}
 				}
-				if (yes) {
+				if (!yes) {
 					continue;
 				} else {
 					rawmtrlOb.push({
@@ -108,22 +119,22 @@
 						color: 'white'
 					});
 				}
+				console.log(yes);
 			}
 			rawmtrlOb = rawmtrlOb;
 
 			for (let i = 0; i < allergy.length; i++) {
-				yes = 0;
 				for (let j = 0; j < userAllergy.length; j++) {
 					if (allergy[i].includes(userAllergy[j])) {
 						allergyOb.push({
 							text: allergy[i],
 							color: 'yellow'
 						});
-						yes = 1;
+						yes = false;
 						break;
 					}
 				}
-				if (yes) {
+				if (!yes) {
 					continue;
 				} else {
 					allergyOb.push({
@@ -131,8 +142,15 @@
 						color: 'white'
 					});
 				}
+				console.log(yes);
 			}
 			allergyOb = allergyOb;
+			console.log(yes, 'fin');
+			// @ts-ignore
+			let { error } = supabase.from('searchList').update({canEat: yes}).eq('goodsID', prdlstReportNo).eq('userName', nickname).then(() => {
+				console.log('asdf');
+				if (error) console.log(error);
+			});
 		});
 	});
 </script>

@@ -25,7 +25,7 @@
 	})
 	async function getRecent() {
 		// @ts-ignore
-		let { error } = await supabase.from('searchList').select().eq('userName', nickname).order('id', {ascending:false}).limit(10)
+		await supabase.from('searchList').select().eq('userName', nickname).order('id', {ascending:false}).limit(10)
 		.then(async (res) => {
 			// @ts-ignore
 			recent = res.data;
@@ -47,7 +47,7 @@
 
 	getRecent()
 
-	let recent = [{id: 0, userName: "0", goodsID: 0, imageURL: 'null'}];
+	let recent = [{id: 0, userName: "0", goodsID: 0, imageURL: lg}];
 	let today = [
 		{ text: '꽃가루 알레르기, 음식도 조심하세요!', img: flower },
 		{ text: '제품에 사진이 있으면 진짜, 그림이면 향만 첨가!?!', img: chips },

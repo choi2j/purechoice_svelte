@@ -42,11 +42,37 @@
 	 * @type {any}
 	 */
 	let allergy = [];
+	/**
+	 * @type {any}
+	 */
+	$: rawmtrlOb = [];
 
 	/**
 	 * @type {any}
 	 */
 	let userAllergy = [];
+	/**
+	 * @type {any}
+	 */
+	$: allergyOb = [];
+	/**
+	 * @type {string}
+	 */
+	let nickname;
+	myStore.subscribe((value) => {
+		console.log([value.nickname, '1']);
+		nickname = value.nickname;
+	});
+
+	async function compare() {
+		await supabase.from('allergyList').select('allergys').eq('name', nickname)
+		.then((res) => {
+			// @ts-ignore
+			userAllergy = res.data[0].allergys.allergys;
+			console.log(userAllergy);
+		});
+	}
+	compare();
 
 	onMount(() => {
 		/**
@@ -107,12 +133,63 @@
 					list = res2;
 					item = list[0].item;
 					console.log(item);
-					rawmtrl = item.rawmtrl.split(' ');
+					rawmtrl = item.rawmtrl.split(',');
 					nutrient = item.nutrient.split(' ');
-					allergy = item.allergy.split(' ');
+					allergy = item.allergy.split(',');
 					console.log('raw', rawmtrl);
 					console.log('nutr', nutrient);
 					console.log('alle', allergy);
+
+					let yes = true;
+
+					for (let i = 0; i < rawmtrl.length; i++) {
+						for (let j = 0; j < userAllergy.length; j++) {
+							if (rawmtrl[i].includes(userAllergy[j])) {
+								rawmtrlOb.push({
+									text: rawmtrl[i],
+									color: 'yellow'
+								});
+								yes = false;
+								break;
+							}
+						}
+						if (!yes) {
+							continue;
+						} else {
+							rawmtrlOb.push({
+								text: rawmtrl[i],
+								color: 'white'
+							});
+						}
+					}
+					rawmtrlOb = rawmtrlOb;
+
+					for (let i = 0; i < allergy.length; i++) {
+						for (let j = 0; j < userAllergy.length; j++) {
+							if (allergy[i].includes(userAllergy[j])) {
+								allergyOb.push({
+									text: allergy[i],
+									color: 'yellow'
+								});
+								yes = false;
+								break;
+							}
+						}
+						if (!yes) {
+							continue;
+						} else {
+							allergyOb.push({
+								text: allergy[i],
+								color: 'white'
+							});
+						}
+					}
+					allergyOb = allergyOb;
+					// @ts-ignore
+					let { error } = supabase.from('searchList').update({canEat: yes}).eq('goodsID', prod).then(() => {
+						console.log('asdf');
+						if (error) console.log(error);
+					});
 				});
 			});
 	});
