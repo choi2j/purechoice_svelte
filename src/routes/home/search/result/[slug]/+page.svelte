@@ -42,11 +42,19 @@
 	/**
 	 * @type {any}
 	 */
+	$: rawmtrlOb = [];
+	/**
+	 * @type {any}
+	 */
 	let nutrient = [];
 	/**
 	 * @type {any}
 	 */
 	let allergy = [];
+	/**
+	 * @type {any}
+	 */
+	$: allergyOb = [];
 
 	/**
 	 * @type {any}
@@ -72,11 +80,59 @@
 			item = list[0].item;
 			console.log(item);
 			rawmtrl = item.rawmtrl.split(',');
-			nutrient = item.nutrient.split(' ');
-			allergy = item.allergy.split(' ');
+			nutrient = item.nutrient.split(',');
+			allergy = item.allergy.split(',');
 			console.log('raw', rawmtrl);
 			console.log('nutr', nutrient);
 			console.log('alle', allergy);
+
+			let yes = 0;
+
+			for (let i = 0; i < rawmtrl.length; i++) {
+				yes = 0;
+				for (let j = 0; j < userAllergy.length; j++) {
+					if (rawmtrl[i].includes(userAllergy[j])) {
+						rawmtrlOb.push({
+							text: rawmtrl[i],
+							color: 'yellow'
+						});
+						yes = 1;
+						break;
+					}
+				}
+				if (yes) {
+					continue;
+				} else {
+					rawmtrlOb.push({
+						text: rawmtrl[i],
+						color: 'white'
+					});
+				}
+			}
+			rawmtrlOb = rawmtrlOb;
+
+			for (let i = 0; i < allergy.length; i++) {
+				yes = 0;
+				for (let j = 0; j < userAllergy.length; j++) {
+					if (allergy[i].includes(userAllergy[j])) {
+						allergyOb.push({
+							text: allergy[i],
+							color: 'yellow'
+						});
+						yes = 1;
+						break;
+					}
+				}
+				if (yes) {
+					continue;
+				} else {
+					allergyOb.push({
+						text: allergy[i],
+						color: 'white'
+					});
+				}
+			}
+			allergyOb = allergyOb;
 		});
 	});
 </script>
@@ -100,24 +156,47 @@
 		<div class="list">
 			<p class="title">원재료명</p>
 			<div class="rawmtrl content">
-				{#each rawmtrl as rawmtrl}
-					<p>{rawmtrl},</p>
+				{#each rawmtrlOb as item, i}
+					{#if item.color == 'yellow'}
+						<p class="backY">{item.text}</p>
+					{:else}
+						<p>{item.text}</p>
+					{/if}
+					{#if i == rawmtrlOb.length - 1}
+						&nbsp;
+					{:else}
+						&#44;&nbsp;
+					{/if}
 				{/each}
 			</div>
 		</div>
 		<div class="list">
 			<p class="title">알레르기</p>
 			<div class="allergy content">
-				{#each allergy as allergy}
-					<p>{allergy}</p>
+				{#each allergyOb as item, i}
+					{#if item.color == 'yellow'}
+						<p class="backY">{item.text}</p>
+					{:else}
+						<p>{item.text}</p>
+					{/if}
+					{#if i == allergyOb.length - 1}
+						&nbsp;
+					{:else}
+						&#44;&nbsp;
+					{/if}
 				{/each}
 			</div>
 		</div>
 		<div class="list">
 			<p class="title">영양성분</p>
 			<div class="nutrient content">
-				{#each nutrient as nutrient}
-					<p>{nutrient}</p>
+				{#each nutrient as item, i}
+					<p>{item}</p>
+					{#if i == nutrient.length - 1}
+						&nbsp;
+					{:else}
+						&#44;&nbsp;
+					{/if}
 				{/each}
 			</div>
 		</div>
@@ -180,6 +259,8 @@
 		font-weight: var(--regu);
 		word-break: keep-all;
 		letter-spacing: 0.05rem;
+		display: flex;
+		flex-wrap: wrap;
 	}
 
 	.nutrient {
@@ -189,5 +270,11 @@
 	.content p {
 		width: fit-content;
 		display: inline;
+	}
+
+	.backY {
+		background-color: var(--yellow);
+		font-weight: var(--semi);
+		color: var(--black);
 	}
 </style>

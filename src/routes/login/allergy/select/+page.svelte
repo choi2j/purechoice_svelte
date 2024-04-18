@@ -4,100 +4,120 @@
 	import rt from '$lib/assets/return.svg';
 	import yc from '$lib/assets/yellowcheck.svg';
 
+	import egg from '$lib/assets/allergy/1.png';
+	import milk from '$lib/assets/allergy/2.png';
+	import barkwheat from '$lib/assets/allergy/3.png';
+	import peanut from '$lib/assets/allergy/4.png';
+	import bean from '$lib/assets/allergy/5.png';
+	import wheat from '$lib/assets/allergy/6.png';
+	import jat from '$lib/assets/allergy/7.png';
+	import walnut from '$lib/assets/allergy/8.png';
+	import crab from '$lib/assets/allergy/9.png';
+	import shrimp from '$lib/assets/allergy/10.png';
+	import squid from '$lib/assets/allergy/11.png';
+	import fish from '$lib/assets/allergy/12.png';
+	import clam from '$lib/assets/allergy/13.png';
+	import peach from '$lib/assets/allergy/14.png';
+	import tomato from '$lib/assets/allergy/15.png';
+	import chicken from '$lib/assets/allergy/16.png';
+	import pork from '$lib/assets/allergy/17.png';
+	import beef from '$lib/assets/allergy/18.png';
+	import ahwangsan from '$lib/assets/allergy/19.png';
+
 	let tag = '';
 	let tagInfo = [
 		{
-			icon: si,
+			icon: egg,
 			name: '계란',
 			status: 'inactive'
 		},
 		{
-			icon: si,
+			icon: milk,
 			name: '우유',
 			status: 'inactive'
 		},
 		{
-			icon: si,
+			icon: barkwheat,
 			name: '메밀',
 			status: 'inactive'
 		},
 		{
-			icon: si,
+			icon: peanut,
 			name: '땅콩',
 			status: 'inactive'
 		},
 		{
-			icon: si,
+			icon: bean,
 			name: '대두',
 			status: 'inactive'
 		},
 		{
-			icon: si,
+			icon: wheat,
 			name: '밀',
 			status: 'inactive'
 		},
 		{
-			icon: si,
+			icon: jat,
 			name: '잣',
 			status: 'inactive'
 		},
 		{
-			icon: si,
+			icon: walnut,
 			name: '호두',
 			status: 'inactive'
 		},
 		{
-			icon: si,
+			icon: crab,
 			name: '게',
 			status: 'inactive'
 		},
 		{
-			icon: si,
+			icon: shrimp,
 			name: '새우',
 			status: 'inactive'
 		},
 		{
-			icon: si,
+			icon: squid,
 			name: '오징어',
 			status: 'inactive'
 		},
 		{
-			icon: si,
+			icon: fish,
 			name: '고등어',
 			status: 'inactive'
 		},
 		{
-			icon: si,
+			icon: clam,
 			name: '조개류',
 			status: 'inactive'
 		},
 		{
-			icon: si,
+			icon: peach,
 			name: '복숭아',
 			status: 'inactive'
 		},
 		{
-			icon: si,
+			icon: tomato,
 			name: '토마토',
 			status: 'inactive'
 		},
 		{
-			icon: si,
+			icon: chicken,
 			name: '닭고기',
 			status: 'inactive'
 		},
 		{
-			icon: si,
+			icon: pork,
 			name: '돼지고기',
 			status: 'inactive'
 		},
 		{
-			icon: si,
+			icon: beef,
 			name: '쇠고기',
 			status: 'inactive'
 		},
 		{
-			icon: si,
+			icon: ahwangsan,
 			name: '아황산류',
 			status: 'inactive'
 		}
@@ -124,7 +144,7 @@
 	let allergyList;
 	function convert() {
 		allergyList = Array.from(allergy);
-		console.log(allergyList)
+		console.log(allergyList);
 	}
 
 	let finish = 0;
@@ -183,7 +203,7 @@
 			}}>다음</button
 		>
 	{:else}
-		<img src={yc} alt="check" class="check"/>
+		<img src={yc} alt="check" class="check" />
 		<p class="big">가입 성공</p>
 		<a class="primary-button" href="/home">시작하기</a>
 	{/if}
@@ -219,7 +239,9 @@
 	}
 
 	.tag img {
+		width: 7rem;
 		height: 7rem;
+		object-fit: contain;
 	}
 
 	.tag p {

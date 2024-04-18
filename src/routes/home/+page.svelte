@@ -93,7 +93,6 @@
 				{#each recent as { goodsID, imageURL }, i}
 					<a class="item" href="/home/search/result/{goodsID}">
 						<img src={imageURL} alt="sample" class="goodsImage" />
-						<!-- 얘 크기랑 모양 조정좀 -->
 					</a>
 				{/each}
 			</div>

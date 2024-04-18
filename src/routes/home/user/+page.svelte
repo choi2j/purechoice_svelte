@@ -27,7 +27,7 @@
         <img src={userimg} alt="user">
     </div>
     <div class="goallergy-con">
-        <a class="goallergy" href="/home/user/info">알레르기 정보 수정</a>
+        <a class="goallergy" href="/home/user/select">알레르기 정보 수정</a>
     </div>
 </div>
 
