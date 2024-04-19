@@ -13,7 +13,6 @@
 
 	//@ts-ignore
 	export let data;
-	console.log(data);
 
 	let query = data.query;
 
@@ -32,16 +31,13 @@
 		)
 			.then((res) => res.json())
 			.then((res) => (result = res.body.items));
-		// await console.log(result);
 		return result;
 	}
 
 	function block(input) {
-		console.log(input);
 		getResult(input).then((res) => {
 			list = res;
 		});
-		console.log(list);
 		return false;
 	}
 
