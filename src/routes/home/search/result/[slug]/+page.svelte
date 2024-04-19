@@ -72,7 +72,7 @@
 		});
 	}
 
-	onMount(() => {
+	onMount(async () => {
 		/**
 		 * @param {any} input
 		 */
@@ -86,73 +86,74 @@
 			// await console.log(result);
 			return result;
 		}
-		compare();
-		getResult(prdlstReportNo).then((res) => {
-			list = res;
-			item = list[0].item;
-			console.log(item);
-			rawmtrl = item.rawmtrl.split(',');
-			nutrient = item.nutrient.split(',');
-			allergy = item.allergy.split(',');
-			console.log('raw', rawmtrl);
-			console.log('nutr', nutrient);
-			console.log('alle', allergy);
+		compare().then(() => {
+			getResult(prdlstReportNo).then((res) => {
+				list = res;
+				item = list[0].item;
+				console.log(item);
+				rawmtrl = item.rawmtrl.split(',');
+				nutrient = item.nutrient.split(',');
+				allergy = item.allergy.split(',');
+				console.log('raw', rawmtrl);
+				console.log('nutr', nutrient);
+				console.log('alle', allergy);
 
-			let yes = true;
+				let yes = true;
 
-			for (let i = 0; i < rawmtrl.length; i++) {
-				for (let j = 0; j < userAllergy.length; j++) {
-					if (rawmtrl[i].includes(userAllergy[j])) {
+				for (let i = 0; i < rawmtrl.length; i++) {
+					for (let j = 0; j < userAllergy.length; j++) {
+						if (rawmtrl[i].includes(userAllergy[j])) {
+							rawmtrlOb.push({
+								text: rawmtrl[i],
+								color: 'yellow'
+							});
+							yes = false;
+							break;
+						}
+					}
+					if (!yes) {
+						continue;
+					} else {
 						rawmtrlOb.push({
 							text: rawmtrl[i],
-							color: 'yellow'
+							color: 'white'
 						});
-						yes = false;
-						break;
 					}
+					console.log(yes);
 				}
-				if (!yes) {
-					continue;
-				} else {
-					rawmtrlOb.push({
-						text: rawmtrl[i],
-						color: 'white'
-					});
-				}
-				console.log(yes);
-			}
-			rawmtrlOb = rawmtrlOb;
+				rawmtrlOb = rawmtrlOb;
 
-			for (let i = 0; i < allergy.length; i++) {
-				for (let j = 0; j < userAllergy.length; j++) {
-					if (allergy[i].includes(userAllergy[j])) {
+				for (let i = 0; i < allergy.length; i++) {
+					for (let j = 0; j < userAllergy.length; j++) {
+						if (allergy[i].includes(userAllergy[j])) {
+							allergyOb.push({
+								text: allergy[i],
+								color: 'yellow'
+							});
+							yes = false;
+							break;
+						}
+					}
+					if (!yes) {
+						continue;
+					} else {
 						allergyOb.push({
 							text: allergy[i],
-							color: 'yellow'
+							color: 'white'
 						});
-						yes = false;
-						break;
 					}
+					console.log(yes);
 				}
-				if (!yes) {
-					continue;
-				} else {
-					allergyOb.push({
-						text: allergy[i],
-						color: 'white'
-					});
-				}
-				console.log(yes);
-			}
-			allergyOb = allergyOb;
-			console.log(yes, 'fin');
+				allergyOb = allergyOb;
+				console.log(yes, 'fin');
 
-			console.log(rawmtrlOb);
-			console.log(allergyOb);
-			// @ts-ignore
-			let { error } = supabase.from('searchList').update({canEat: yes}).eq('goodsID', prdlstReportNo).eq('userName', nickname).then(() => {
-				console.log('asdf');
-				if (error) console.log(error);
+				console.log(rawmtrlOb);
+				console.log(allergyOb);
+				// @ts-ignore
+				let { error } = supabase.from('searchList').update({canEat: yes}).eq('goodsID', prdlstReportNo).eq('userName', nickname).then(() => {
+					console.log('asdf');
+					if (error) console.log(error);
+				});
 			});
 		});
 	});
