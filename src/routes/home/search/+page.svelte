@@ -1,5 +1,8 @@
 <script>
+// @ts-nocheck
+
 	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
 
     import '$lib/style/style.css';
 
@@ -11,29 +14,37 @@
 	export let data;
 	console.log(data);
 
+	let getquery = $page.url.searchParams.get('search')
+
 	/**
 	 * @type {any}
 	 */
 	let list = [];
 
-	onMount(() => {
-		/**
-		 * @param {any} input
-		 */
+	/**
+	 * @param {any} input
+	 */
 		async function getResult(input) {
-			let result;
-			await fetch(
-				`https://apis.data.go.kr/B553748/CertImgListServiceV3/getCertImgListServiceV3?serviceKey=I6j8ftZVndEWKbhSsmcwF%2FEBEDj0WJVOA7EBUtK46S8ro4LjwzywS326Q2PqYYasxppLCtv5XBHLm08TRnCpPw%3D%3D&prdlstNm=${input}&returnType=json&pageNo=1&numOfRows=10`
-			)
-				.then((res) => res.json())
-				.then((res) => (result = res.body.items));
-			// await console.log(result);
-			return result;
-		}
-		getResult(data.query).then((res) => {
+		let result;
+		await fetch(
+			`https://apis.data.go.kr/B553748/CertImgListServiceV3/getCertImgListServiceV3?serviceKey=I6j8ftZVndEWKbhSsmcwF%2FEBEDj0WJVOA7EBUtK46S8ro4LjwzywS326Q2PqYYasxppLCtv5XBHLm08TRnCpPw%3D%3D&prdlstNm=${input}&returnType=json&pageNo=1&numOfRows=10`
+		)
+			.then((res) => res.json())
+			.then((res) => (result = res.body.items));
+		// await console.log(result);
+		return result;
+	}
+
+	function block() {
+		getResult(getquery).then((res) => {
 			console.log(res);
 			list = res;
 		});
+		return false;
+	}
+
+	onMount(() => {
+		block();
 	});
 
 	let query = '';
@@ -57,7 +68,7 @@
 					placeholder="search"
 					bind:value={query}
 				/>
-				<button type="submit">
+				<button type="submit" on:submit={block()}>
 					<img src={si} alt="search" />
 				</button>
 			</form>
