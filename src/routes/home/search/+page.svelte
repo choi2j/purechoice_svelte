@@ -43,7 +43,7 @@
 
 
 	onMount(() => {
-		block(getquery);
+		block(query);
 	});
 
 	searchQuery.subscribe((v) => {
