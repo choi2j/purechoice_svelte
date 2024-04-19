@@ -9,12 +9,13 @@
 	import rt from '$lib/assets/return.svg';
 	import shi from '$lib/assets/share_icon.svg';
 	import si from '$lib/assets/search_icon.svg';
+	import { searchQuery } from '$lib/store';
 
 	//@ts-ignore
 	export let data;
 	console.log(data);
 
-	let getquery = $page.url.searchParams.get('search');
+	let query = data.query;
 
 	/**
 	 * @type {any}
@@ -35,21 +36,24 @@
 		return result;
 	}
 
-	async function block() {
-		getResult(getquery).then((res) => {
-			console.log(res);
+	function block(input) {
+		console.log(input);
+		getResult(input).then((res) => {
 			list = res;
 		});
+		console.log(list);
 		return false;
 	}
 
-	onMount(() => {
-		getquery = $page.url.searchParams.get('search');
 
-		block();
+	onMount(() => {
+		block(getquery);
 	});
 
-	let query = '';
+	searchQuery.subscribe((v) => {
+		console.log('query change');
+		block(query);
+	})
 	// tst
 </script>
 
@@ -61,7 +65,7 @@
 	</nav>
 	<div class="main">
 		<div class="search-input-container">
-			<form action="/home/search" method="GET" class="search-input-form">
+			<form action="/home/search" method="GET" class="search-input-form" on:submit={searchQuery.set(query)}>
 				<input
 					type="text"
 					name="search"
@@ -70,7 +74,7 @@
 					placeholder="search"
 					bind:value={query}
 				/>
-				<button type="submit" on:submit={block()}>
+				<button type="submit">
 					<img src={si} alt="search" />
 				</button>
 			</form>
