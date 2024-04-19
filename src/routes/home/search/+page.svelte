@@ -1,10 +1,10 @@
 <script>
-// @ts-nocheck
+	// @ts-nocheck
 
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 
-    import '$lib/style/style.css';
+	import '$lib/style/style.css';
 
 	import rt from '$lib/assets/return.svg';
 	import shi from '$lib/assets/share_icon.svg';
@@ -14,7 +14,7 @@
 	export let data;
 	console.log(data);
 
-	let getquery = $page.url.searchParams.get('search')
+	let getquery = $page.url.searchParams.get('search');
 
 	/**
 	 * @type {any}
@@ -24,7 +24,7 @@
 	/**
 	 * @param {any} input
 	 */
-		async function getResult(input) {
+	async function getResult(input) {
 		let result;
 		await fetch(
 			`https://apis.data.go.kr/B553748/CertImgListServiceV3/getCertImgListServiceV3?serviceKey=I6j8ftZVndEWKbhSsmcwF%2FEBEDj0WJVOA7EBUtK46S8ro4LjwzywS326Q2PqYYasxppLCtv5XBHLm08TRnCpPw%3D%3D&prdlstNm=${input}&returnType=json&pageNo=1&numOfRows=10`
@@ -35,7 +35,7 @@
 		return result;
 	}
 
-	function block() {
+	async function block() {
 		getResult(getquery).then((res) => {
 			console.log(res);
 			list = res;
@@ -44,6 +44,8 @@
 	}
 
 	onMount(() => {
+		getquery = $page.url.searchParams.get('search');
+
 		block();
 	});
 
