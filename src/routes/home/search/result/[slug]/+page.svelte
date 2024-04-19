@@ -146,6 +146,9 @@
 			}
 			allergyOb = allergyOb;
 			console.log(yes, 'fin');
+
+			console.log(rawmtrlOb);
+			console.log(allergyOb);
 			// @ts-ignore
 			let { error } = supabase.from('searchList').update({canEat: yes}).eq('goodsID', prdlstReportNo).eq('userName', nickname).then(() => {
 				console.log('asdf');
