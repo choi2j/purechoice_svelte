@@ -65,12 +65,15 @@
 	});
 
 	async function compare() {
-		await supabase.from('allergyList').select('allergys').eq('name', nickname)
-		.then((res) => {
-			// @ts-ignore
-			userAllergy = res.data[0].allergys.allergys;
-			console.log(userAllergy);
-		});
+		await supabase
+			.from('allergyList')
+			.select('allergys')
+			.eq('name', nickname)
+			.then((res) => {
+				// @ts-ignore
+				userAllergy = res.data[0].allergys.allergys;
+				console.log(userAllergy);
+			});
 	}
 	compare();
 
@@ -185,11 +188,19 @@
 						}
 					}
 					allergyOb = allergyOb;
+					console.log(yes, 'fin');
+
+					console.log(rawmtrlOb);
+					console.log(allergyOb);
 					// @ts-ignore
-					let { error } = supabase.from('searchList').update({canEat: yes}).eq('goodsID', prod).then(() => {
-						console.log('asdf');
-						if (error) console.log(error);
-					});
+					let { error } = supabase
+						.from('searchList')
+						.update({ canEat: yes })
+						.eq('goodsID', prod)
+						.then(() => {
+							console.log('asdf');
+							if (error) console.log(error);
+						});
 				});
 			});
 	});
@@ -216,24 +227,47 @@
 		<div class="list">
 			<p class="title">원재료명</p>
 			<div class="rawmtrl content">
-				{#each rawmtrl as rawmtrl}
-					<p>{rawmtrl},</p>
+				{#each rawmtrlOb as item, i}
+					{#if item.color == 'yellow'}
+						<p class="backY">{item.text}</p>
+					{:else}
+						<p>{item.text}</p>
+					{/if}
+					{#if i == rawmtrlOb.length - 1}
+						&nbsp;
+					{:else}
+						&#44;&nbsp;
+					{/if}
 				{/each}
 			</div>
 		</div>
 		<div class="list">
 			<p class="title">알레르기</p>
 			<div class="allergy content">
-				{#each allergy as allergy}
-					<p>{allergy}</p>
+				{#each allergyOb as item, i}
+					{#if item.color == 'yellow'}
+						<p class="backY">{item.text}</p>
+					{:else}
+						<p>{item.text}</p>
+					{/if}
+					{#if i == allergyOb.length - 1}
+						&nbsp;
+					{:else}
+						&#44;&nbsp;
+					{/if}
 				{/each}
 			</div>
 		</div>
 		<div class="list">
 			<p class="title">영양성분</p>
 			<div class="nutrient content">
-				{#each nutrient as nutrient}
-					<p>{nutrient}</p>
+				{#each nutrient as item, i}
+					<p>{item}</p>
+					{#if i == nutrient.length - 1}
+						&nbsp;
+					{:else}
+						&#44;&nbsp;
+					{/if}
 				{/each}
 			</div>
 		</div>
@@ -296,6 +330,8 @@
 		font-weight: var(--regu);
 		word-break: keep-all;
 		letter-spacing: 0.05rem;
+		display: flex;
+		flex-wrap: wrap;
 	}
 
 	.nutrient {
@@ -305,5 +341,11 @@
 	.content p {
 		width: fit-content;
 		display: inline;
+	}
+
+	.backY {
+		background-color: var(--yellow);
+		font-weight: var(--semi);
+		color: var(--black);
 	}
 </style>
