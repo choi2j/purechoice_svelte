@@ -103,7 +103,7 @@
 			// @ts-ignore
 			let result;
 			await fetch(
-				`http://openapi.foodsafetykorea.go.kr/api/ed811a8ebe974a4cbf1f/I2570/json/1/5/BRCD_NO=${input}`
+				`https://openapi.foodsafetykorea.go.kr/api/ed811a8ebe974a4cbf1f/I2570/json/1/5/BRCD_NO=${input}`
 			)
 				.then((res) => res.json())
 				.then((res) => (result = res.I2570.row));
