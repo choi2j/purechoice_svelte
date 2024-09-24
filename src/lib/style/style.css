@@ -1,0 +1,134 @@
+@import './root.css';
+@font-face {
+	font-family: 'KoddiUDOnGothic';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/KoddiUDOnGothic-Regular.woff')
+		format('woff');
+}
+@font-face {
+	font-family: 'Pretendard';
+	src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff')
+		format('woff');
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+	box-sizing: border-box;
+	font-family: 'KoddiUDOnGothic';
+}
+
+html,
+body {
+	height: 100%;
+	width: 100%;
+	background: var(--black);
+}
+
+.container {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	padding: 1.75rem;
+}
+
+button {
+	border-radius: 10px;
+}
+
+.primary-button {
+	border: none;
+	padding: 0.75rem;
+	border-radius: 10px;
+	text-align: center;
+	background-color: var(--yellow);
+	font-size: var(--mid);
+	font-weight: var(--semi);
+	color: var(--black);
+}
+
+nav {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 1rem;
+}
+
+nav img {
+	height: 2rem;
+}
+
+.main {
+	padding: 0.5rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+	height: 100%;
+}
+
+.search-input-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+.search-input-form {
+	width: 100%;
+	background-color: var(--gray200);
+	border-radius: 10px;
+	padding: 0.5rem;
+	display: flex;
+	gap: 0.2rem;
+}
+
+.search-input {
+	width: 100%;
+	display: flex;
+	background: none;
+	background-color: none;
+	border: none;
+	padding: 0.2rem;
+	outline: none;
+	color: var(--gray50);
+}
+
+.search-input-form button {
+	background-color: none;
+	background: none;
+	border: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--gray50);
+}
+
+a {
+	color: var(--white);
+}
+
+
+
+.share {
+	background-color: #00000080;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	width: 100vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.share button {
+	border: none;
+	background: none;
+	outline: none;
+}
+
+.share button img{
+	height: 10rem;
+}
